@@ -1,0 +1,53 @@
+<div class="container">
+  <header><h1>{{ title }}</h1></header>
+
+  <section class="form-box">
+    <h3>{{ editandoId ? 'Editar cliente' : 'Agregar cliente' }}</h3>
+
+    <form [formGroup]="clienteForm" (ngSubmit)="editandoId ? guardarCambios() : agregarCliente()">
+      <label>Nombre</label>
+      <input formControlName="nombre" />
+
+      <label>Email</label>
+      <input formControlName="email" />
+
+      <label>Teléfono</label>
+      <input formControlName="telefono" />
+
+      <label>Dirección</label>
+      <input formControlName="direccion" />
+
+      <div class="buttons">
+        <button type="submit">{{ editandoId ? 'Guardar' : 'Agregar' }}</button>
+        <button type="button" (click)="cancelarEdicion()">Limpiar</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="list-box">
+    <h3>Clientes ({{ clientes.length }})</h3>
+
+    <table *ngIf="clientes.length > 0; else empty">
+      <thead>
+        <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Dirección</th><th>Acciones</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of clientes">
+          <td>{{ c.id }}</td>
+          <td>{{ c.nombre }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.telefono }}</td>
+          <td>{{ c.direccion }}</td>
+          <td>
+            <button (click)="editarCliente(c)">Editar</button>
+            <button (click)="eliminarCliente(c.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #empty>
+      <p>No hay clientes. Agrega uno arriba.</p>
+    </ng-template>
+  </section>
+</div>
